@@ -49,8 +49,8 @@ function mgrsUtilService() {
     function latLonToMGRS(ll, accuracy) {
       accuracy = accuracy || 5; // default accuracy 1m
       return encode(LLtoUTM({
-        lat: ll[1],
-        lon: ll[0]
+        lat: ll.lat,
+        lon: ll.lon
       }), accuracy);
     }
 
