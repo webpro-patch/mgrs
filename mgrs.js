@@ -1,10 +1,6 @@
 (function () {
   "use strict";
 
-  angular
-    .module("mgrsUtil", [])
-    .factory("mgrsUtilService", mgrsUtilService);
-
 function mgrsUtilService() {
 
     /**
@@ -754,5 +750,14 @@ function mgrsUtilService() {
       MGRSToLatLonBB: MGRSToLatLonBB,
       MGRStoLatLonPoint: MGRStoLatLonPoint
     };
+  }
+
+  // export to Node...
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = mgrsUtilService();
+  } else { // ...or as angular module
+    angular
+      .module("mgrsUtil", [])
+      .factory("mgrsUtilService", mgrsUtilService);
   }
 }());
