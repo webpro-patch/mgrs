@@ -751,7 +751,7 @@ function mgrsUtilService() {
   }
 
   // export to Node...
-  if (isClient) {
+  if (__webpack_require__) {
     angular
       .module("mgrsUtil", [])
       .factory("mgrsUtilService", mgrsUtilService);
