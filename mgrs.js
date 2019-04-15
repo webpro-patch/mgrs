@@ -751,11 +751,11 @@ function mgrsUtilService() {
   }
 
   // export to Node...
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = mgrsUtilService();
-  } else { // ...or as angular module
+  if (__webpack_require__) {
     angular
       .module("mgrsUtil", [])
       .factory("mgrsUtilService", mgrsUtilService);
+  } else { // ...or as angular module
+    module.exports = mgrsUtilService();
   }
 }());
