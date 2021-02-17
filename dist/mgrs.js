@@ -33,11 +33,6 @@ var I = 73; // I
 var O = 79; // O
 var V = 86; // V
 var Z = 90; // Z
-var mgrs = {
-  forward: forward,
-  inverse: inverse,
-  toPoint: toPoint
-};
 /**
  * Conversion of lat/lon to MGRS.
  *
@@ -47,11 +42,11 @@ var mgrs = {
  *      100 m, 2 for 1000 m or 1 for 10000 m). Optional, default is 5.
  * @return {string} the MGRS string for the given location and accuracy.
  */
-function forward(ll, accuracy) {
+function latLonToMGRS(ll, accuracy) {
   accuracy = accuracy || 5; // default accuracy 1m
   return encode(LLtoUTM({
-    lat: ll[1],
-    lon: ll[0]
+    lat: ll.lat,
+    lon: ll.lon
   }), accuracy);
 }
 
@@ -63,7 +58,7 @@ function forward(ll, accuracy) {
  *     (longitude) and top (latitude) values in WGS84, representing the
  *     bounding box for the provided MGRS reference.
  */
-function inverse(mgrs) {
+function MGRSToLatLonBB(mgrs) {
   var bbox = UTMtoLL(decode(mgrs.toUpperCase()));
   if (bbox.lat && bbox.lon) {
     return [bbox.lon, bbox.lat, bbox.lon, bbox.lat];
@@ -71,7 +66,7 @@ function inverse(mgrs) {
   return [bbox.left, bbox.bottom, bbox.right, bbox.top];
 }
 
-function toPoint(mgrs) {
+function MGRStoLatLonPoint(mgrs) {
   var bbox = UTMtoLL(decode(mgrs.toUpperCase()));
   if (bbox.lat && bbox.lon) {
     return [bbox.lon, bbox.lat];
@@ -748,10 +743,18 @@ function getMinNorthing(zoneLetter) {
 
 }
 
+var mgrs = {
+  latLonToMGRS,
+  LLtoUTM,
+  UTMtoLL,
+  MGRSToLatLonBB,
+  MGRStoLatLonPoint,
+  };
+
+exports.latLonToMGRS = latLonToMGRS;
+exports.MGRSToLatLonBB = MGRSToLatLonBB;
+exports.MGRStoLatLonPoint = MGRStoLatLonPoint;
 exports['default'] = mgrs;
-exports.forward = forward;
-exports.inverse = inverse;
-exports.toPoint = toPoint;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
